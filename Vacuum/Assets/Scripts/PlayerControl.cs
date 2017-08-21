@@ -31,8 +31,6 @@ public class PlayerControl : MonoBehaviour {
             playerRigidbody.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
         else if (hAxis < -0.2)
             playerRigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse);
-        else
-            playerRigidbody.velocity = new Vector2(Mathf.Lerp(playerRigidbody.velocity.x,0,0.0625f), playerRigidbody.velocity.y);
         
         if (grounded && jump)
             playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
