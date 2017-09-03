@@ -2,45 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : MonoBehaviour
+{
 
     public LayerMask groundMask;
     public LayerMask enemyMask;
     public float speed = 0.5f;
-    public float jumpForce;
     private Rigidbody2D playerRigidbody;
 
-	void Start ()
+    void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>().focus = gameObject;
-	}
+    }
 
-	void Update()
+    void Update()
     {
 
     }
 
-	void FixedUpdate ()
+    void FixedUpdate()
     {
         var hAxis = Input.GetAxis("Horizontal");
-        var jump = Input.GetButton("Jump");
-        var grounded = Physics2D.OverlapCircle(playerRigidbody.position - new Vector2(0f, 1.1f), 0.1f, groundMask) != null;
+        var vAxis = Input.GetAxis("Vertical");
 
-        if (hAxis > 0.2)
-            playerRigidbody.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
-        else if (hAxis < -0.2)
-            playerRigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse);
-        
-        if (grounded && jump)
-            playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        if (hAxis > 0)
+            playerRigidbody.AddForce(new Vector2(speed, 0f), ForceMode2D.Force);
+        else if (hAxis < 0)
+            playerRigidbody.AddForce(new Vector2(-speed, 0f), ForceMode2D.Force);
+        if (vAxis > 0)
+            playerRigidbody.AddForce(new Vector2(0f, speed), ForceMode2D.Force);
+        else if(vAxis < 0)
+            playerRigidbody.AddForce(new Vector2(0f, -speed), ForceMode2D.Force);
 
-
-        if(playerRigidbody.rotation != 0)
-        {
-            playerRigidbody.rotation = 0;
-        }
-	}
-    
-    
+    }
 }
